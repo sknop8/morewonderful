@@ -63,24 +63,25 @@ function onLoad(framework) {
 
   camera.position.z = 1000;
 
+  // Embed the video as a texture onto a plane in the scene
   image = document.createElement('canvas');
- image.width = 1920;
- image.height = 1080;
+  image.width = 1920;
+  image.height = 1080;
 
- imageContext = image.getContext('2d');
- imageContext.fillStyle = '#000000';
- imageContext.fillRect(0, 0, 1920, 1080);
+  imageContext = image.getContext('2d');
+  imageContext.fillStyle = '#000000';
+  imageContext.fillRect(0, 0, 1920, 1080);
 
-   video = document.getElementById('video');
-   video.playbackRate = 6.5;
+  video = document.getElementById('video');
+  video.playbackRate = 6.5;
 
+  texture = new THREE.Texture(video);
+  texture.minFilter = THREE.NearestFilter;
+  texture.magFilter = THREE.NearestFilter;
+  texture.format = THREE.RGBFormat;
+  texture.wrapS = THREE.ClampToEdgeWrapping;
+  texture.wrapT = THREE.ClampToEdgeWrapping;
 
-   texture = new THREE.Texture(video);
-    texture.minFilter = THREE.NearestFilter;
-    texture.magFilter = THREE.NearestFilter;
-    texture.format = THREE.RGBFormat;
-    texture.wrapS = THREE.ClampToEdgeWrapping;
-    texture.wrapT = THREE.ClampToEdgeWrapping;
   var material = new THREE.MeshBasicMaterial({
       map: texture,
       overdraw: true
@@ -88,7 +89,6 @@ function onLoad(framework) {
   var plane = new THREE.PlaneGeometry(1280, 768, 4, 4);
   var mesh = new THREE.Mesh(plane, material);
   scene.add(mesh);
-
 
   clock.start()
 }
@@ -110,8 +110,6 @@ function setPostProcessing(shaders) {
     composer.addPass(pass);
   }
 
-  console.log(composer)
-
   render()
 }
 
@@ -119,11 +117,11 @@ function render() {
   requestAnimationFrame(render)
   composer.render()
 
- camera.lookAt(scene.position);
-    if (video && video.readyState === video.HAVE_ENOUGH_DATA) {
-       imageContext.drawImage(video, 0, 0);
-        if (texture) texture.needsUpdate = true;
-    }
+camera.lookAt(scene.position);
+  if (video && video.readyState === video.HAVE_ENOUGH_DATA) {
+    imageContext.drawImage(video, 0, 0);
+    if (texture) texture.needsUpdate = true;
+  }
 }
 
 function cosine_interp(a, b, t) {
@@ -136,6 +134,9 @@ function onUpdate(framework) {
   var time = clock.elapsedTime
 
   if (Audio.isPlaying()) {
+    // Only start the video once the auto is on
+    video.play()
+
     var size = Audio.getSizeFromSound()
     Rainbow.shader.material.uniforms.u_size.value = size
 
