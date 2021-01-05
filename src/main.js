@@ -92,6 +92,9 @@ function onLoad(framework) {
   scene.add(mesh);
 
   clock.start()
+
+  // Suspend context initially
+  Audio.suspendContext();
 }
 
 // The AudioContext will only start once the user clicks on the page
@@ -149,7 +152,7 @@ function onUpdate(framework) {
   clock.getDelta()
   var time = clock.elapsedTime
 
-  if (Audio.isPlaying() && Audio.contextState === 'running') {
+  if (Audio.isPlaying() && Audio.contextState() === 'running') {
     // Only start the video once the audio is on
     video.play()
 

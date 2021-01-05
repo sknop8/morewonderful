@@ -156,6 +156,9 @@
 	  scene.add(mesh);
 	
 	  clock.start();
+	
+	  // Suspend context initially
+	  _audio2.default.suspendContext();
 	}
 	
 	// The AudioContext will only start once the user clicks on the page
@@ -213,7 +216,7 @@
 	  clock.getDelta();
 	  var time = clock.elapsedTime;
 	
-	  if (_audio2.default.isPlaying() && _audio2.default.contextState === 'running') {
+	  if (_audio2.default.isPlaying() && _audio2.default.contextState() === 'running') {
 	    // Only start the video once the audio is on
 	    video.play();
 	
