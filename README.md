@@ -1,5 +1,5 @@
-the world should be more wonderful - shintaro sakamoto
+<i>the world should be more wonderful - shintaro sakamoto</i>
 
-see it live: https://sknop8.github.io/morewonderful/
+### go here for a friend and a song: https://sknop8.github.io/morewonderful/
 
 run locally: `webpack-dev-server`
