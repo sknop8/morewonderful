@@ -11,20 +11,29 @@
         width: 100%;
         height: 100%;
       }
-      #info {
+      #title, #info {
         position: absolute;
-        top: 100px;
-        width: 100%;
         text-align: center;
+        width: 100%;
         z-index: 100;
-        display:block;
-        font-family:sans-serif;
-        color: black;
+        display: block;
+        font-family: sans-serif;
+      }
+      #title {
+        top: 50px;
+        color: #900C3F ;
+        font-weight:800;
+      }
+      #info {
+        top: 100px;
+        color: gray;
+        font-weight: 100;
       }
     </style>
   </head>
   <body>
-    <div id='info'>click anywhere to play</div>
+    <div id='title'>MORE:WONDERFUL</div>
+    <div id='info'><i>click anywhere to play</i></div>
     <video id="video" width="100%" height="100%" loop muted style="display:none" src="couchme.mp4"></video>
     <script src="bundle.js"></script>
 </video>
