@@ -147,13 +147,27 @@ function getRateFromSound() {
   return tempo
 }
 
+function resumeContext() {
+  context.resume();
+}
+
+function suspendContext() {
+  context.suspend();
+}
+
+function contextState() {
+  return context.state;
+}
 
 export default {
-  init: init,
-  mute: mute,
-  unmute: unmute,
-  isPlaying: isPlaying,
-  getSizeFromSound: getSizeFromSound,
-  getColorFromSound: getColorFromSound,
-  getRateFromSound: getRateFromSound
+  init,
+  mute,
+  unmute,
+  isPlaying,
+  getSizeFromSound,
+  getColorFromSound,
+  getRateFromSound,
+  contextState,
+  resumeContext,
+  suspendContext
 }

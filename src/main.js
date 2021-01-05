@@ -29,7 +29,8 @@ function onLoad(framework) {
   scene = framework.scene;
   camera = framework.camera;
   renderer = framework.renderer;
-  var gui = framework.gui;
+  // Note: commenting out gui so there's no confusion with click to play
+  // var gui = framework.gui;
   var stats = framework.stats;
 
   directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
@@ -48,9 +49,9 @@ function onLoad(framework) {
 
   if (audioControl.mute) Audio.mute()
 
-  gui.add(audioControl, 'mute').onChange(function(newVal) {
-    if (newVal) { Audio.mute() } else { Audio.unmute() }
-  })
+  // gui.add(audioControl, 'mute').onChange(function(newVal) {
+  //   if (newVal) { Audio.mute() } else { Audio.unmute() }
+  // })
 
   currentPost = [ Rainbow, Window ]
   setPostProcessing()
@@ -93,6 +94,21 @@ function onLoad(framework) {
   clock.start()
 }
 
+// The AudioContext will only start once the user clicks on the page
+document.documentElement.addEventListener(
+  "mousedown", function() {
+   if (Audio.contextState() === 'running') {
+      Audio.suspendContext();
+      document.getElementById('info').style.visibility = 'visible';
+      video.pause();
+    } else if (Audio.contextState()=== 'suspended') {
+      Audio.resumeContext();
+      document.getElementById('info').style.visibility = 'hidden';
+      video.play();
+    }
+  }
+);
+
 function setPostProcessing(shaders) {
   for (var s in allPost) { allPost[s].turnOff() }
   composer = new EffectComposer(renderer)
@@ -133,8 +149,8 @@ function onUpdate(framework) {
   clock.getDelta()
   var time = clock.elapsedTime
 
-  if (Audio.isPlaying()) {
-    // Only start the video once the auto is on
+  if (Audio.isPlaying() && Audio.contextState === 'running') {
+    // Only start the video once the audio is on
     video.play()
 
     var size = Audio.getSizeFromSound()

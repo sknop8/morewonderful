@@ -11,9 +11,20 @@
         width: 100%;
         height: 100%;
       }
+      #info {
+        position: absolute;
+        top: 100px;
+        width: 100%;
+        text-align: center;
+        z-index: 100;
+        display:block;
+        font-family:sans-serif;
+        color: black;
+      }
     </style>
   </head>
   <body>
+    <div id='info'>click anywhere to play</div>
     <video id="video" width="100%" height="100%" loop muted style="display:none" src="couchme.mp4"></video>
     <script src="bundle.js"></script>
 </video>

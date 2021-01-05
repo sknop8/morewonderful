@@ -15,10 +15,10 @@ function init(callback, update) {
   stats.domElement.style.top = '0px';
   document.body.appendChild(stats.domElement);
 
-  var gui = new DAT.GUI();
+  // var gui = new DAT.GUI();
 
   var framework = {
-    gui: gui,
+    // gui: gui,
     stats: stats
   };
 
